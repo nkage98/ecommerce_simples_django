@@ -12,8 +12,7 @@
 
     <div class="container">
         <div class="row">
-            <center>
-                <div class="col-md-6 offset-mr-1">
+                <div class="col-md-6 offset-md-3">
                     <br>
                         <form method="POST" action="{% url "login" %}">{% csrf_token %}
                             
@@ -26,11 +25,13 @@
                                 <input type="password" class="form-control" name="password" placeholder="Enter your password">
                             </div>
                             <br>
-                            <button type="submit" class="btn btn-secondary">Login</button>
+                            <center>
+                                <button type="submit" class="btn btn-secondary">Login</button>
+                            </center>
+                            
                         </form>
                     <br>
                 </div>
-            </center>
         </div>
     </div>
 {% endblock %}
