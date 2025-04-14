@@ -2,21 +2,22 @@ from django.shortcuts import render, redirect
 from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
-from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm
 from .forms import SignUpForm
-from django import forms
 
 def category(request, foo):
     foo = foo.replace('-', ' ')
 
     try:
-        category = Category.object.get(name=foo)
+        category = Category.objects.get(name=foo)
         products = Product.objects.filter(category=category)
-        return render(request, 'category.html', {'products': products}, {'category': category})
+        context = {
+            'products': products, 
+            'category': category,
+        }
+        return render(request, 'category.html', context )
     
     except:
-        messages.success(request, ("Category doesn't exist"))
+        messages.success(request, (f"Category {foo} doesn't exist"))
         return redirect('home')
 
 
