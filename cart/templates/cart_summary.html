@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+ {% extends "base.html" %}
 
 {% block content %}
     <!-- Header-->
@@ -64,6 +64,9 @@
                                         <div class="col-md-2">
                                             <button type="button" data-index="{{product.id}}" class="btn btn-secondary update-cart">Update</button>
                                         </div>
+                                        <div class="col-md-2">
+                                            <button type="button" data-index="{{product.id}}" class="btn btn-danger delete-product">Remove</button>
+                                        </div>
                                     </div>
                                         
                                     <br>
@@ -91,7 +94,7 @@
 
 
 <script>
-    // checando se o botao foi pressionado
+    // botao update
     $(document).on('click', '.update-cart', function(e){
         e.preventDefault();
         var productid = $(this).data('index');
@@ -101,6 +104,28 @@
             data: {
                 product_id: $(this).data('index'), //pega o valor do add-cart
                 product_qty: $('#select' + productid + 'option:selected').text(),
+                csrfmiddlewaretoken: '{{ csrf_token }}',
+                action: 'post'
+            },
+
+            success: function(json){
+                location.reload();
+            },
+
+            error: function(xhr, errmsg, err){
+
+            }
+        });
+    })
+    // deletar item do carrinho
+    $(document).on('click', '.delete-product', function(e){
+        e.preventDefault();
+        //var productid = $(this).data('index');
+        $.ajax({
+            type: 'POST',
+            url: '{% url 'cart_delete' %}',
+            data: {
+                product_id: $(this).data('index'), //pega o valor do add-cart
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
