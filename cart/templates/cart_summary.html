@@ -88,8 +88,11 @@
             </div>
             
         {% endif %}
-        
+        <div>
+            <h3 >TOTAL: {{ totals }}</h3>
+        </div>
     </div>
+    
    <br><br><br><br><br><br><br>
 
 
@@ -112,9 +115,7 @@
                 location.reload();
             },
 
-            error: function(xhr, errmsg, err){
-
-            }
+            error: function(xhr, errmsg, err){}
         });
     })
     // deletar item do carrinho
