@@ -41,7 +41,8 @@ def cart_update(request):
 
         response = JsonResponse({'qty': product_qty})
         return response
-    
+
+
 def cart_delete(request):
     cart = Cart(request)
     if request.POST.get('action') == 'post':

@@ -50,14 +50,16 @@
                                             <select class="form-select form-select-sm" id="select{{product.id}}">
                                                 
                                                     {% for key, value in quantities.items %}
-                                                        {% if product.id|slugify == key %}
-                                                        <option selected>{{ value }}</option>
+                                                        {% if  key == product.id|slugify %}
+                                                            <option selected>{{ value }}</option>
                                                         {% endif %}
                                                     {% endfor %}
                                                 
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
                                                 <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
                                             </select>
                                             
                                         </div>
@@ -106,18 +108,22 @@
             url: '{% url 'cart_update' %}',
             data: {
                 product_id: $(this).data('index'), //pega o valor do add-cart
-                product_qty: $('#select' + productid + 'option:selected').text(),
+                product_qty: $('#select' + productid + ' option:selected').text(),
                 csrfmiddlewaretoken: '{{ csrf_token }}',
                 action: 'post'
             },
 
             success: function(json){
+                console.log(json)
                 location.reload();
+
             },
 
             error: function(xhr, errmsg, err){}
         });
     })
+</script>
+<script>
     // deletar item do carrinho
     $(document).on('click', '.delete-product', function(e){
         e.preventDefault();
@@ -142,4 +148,4 @@
     })
 </script>
 
-{% endblock content %}
+{% endblock %}
