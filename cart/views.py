@@ -38,7 +38,7 @@ def cart_update(request):
         product_qty = int(request.POST.get('product_qty'))
 
         cart.update(product=product_id, quantity=product_qty)
-
+        messages.success(request, (f'Your shopping cart has been updated'))
         response = JsonResponse({'qty': product_qty})
         return response
 
@@ -50,6 +50,6 @@ def cart_delete(request):
         cart.delete(product=product_id)
 
         response = JsonResponse({'product': product_id})
-
+        messages.success(request, (f'A item was removed from your shopping cart'))
         return response
     

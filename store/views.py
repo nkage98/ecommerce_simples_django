@@ -4,6 +4,14 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms import SignUpForm
 
+def category_summary(request):
+    categories = Category.objects.all()
+    context = {
+        "categories": categories,
+    }
+    return render(request, 'category_summary.html', context )
+    
+
 def category(request, foo):
     foo = foo.replace('-', ' ')
 
