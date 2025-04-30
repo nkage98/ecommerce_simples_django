@@ -98,7 +98,7 @@ def register_user(request):
         
 def update_user(request):
     if request.user.is_authenticated:
-        current_users = User.objects.get(id=request.user.id)
+        current_user = User.objects.get(id=request.user.id)
         user_form = UpdateUserForm(request.POST or None, instance=current_user)
 
         if user_form.is_valid():
@@ -115,3 +115,5 @@ def update_user(request):
         redirect('home')
     return render(request, 'update_user.html', {})
 
+def update_password(request):
+    return render(request, 'update_password.html', {})
