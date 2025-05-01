@@ -3,7 +3,7 @@ from .models import Product, Category
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import SignUpForm, UpdateUserForm
+from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm
 
 def category_summary(request):
     categories = Category.objects.all()
@@ -116,4 +116,25 @@ def update_user(request):
     return render(request, 'update_user.html', {})
 
 def update_password(request):
+    if request.user.is_authenticated:
+        current_user = request.user
+        if request.method == 'POST':
+            form = ChangePasswordForm(current_user, request.POST)
+            if form.is_valid():
+                form.save()
+                messages.success(request, "Password updated")
+                login(request, current_user)
+                return redirect('update_user')
+            else:
+                for error in list(form.error.values()):
+                    messages.error(request, error)
+                    return redirect('update_password')
+        else:
+            form = ChangePasswordForm(current_user)
+            return render(request, "update_password.html", {'form':form})
+
+    else:
+        messages.success(request, "You must be logged to acces this page")
+        redirect('home')
+
     return render(request, 'update_password.html', {})
